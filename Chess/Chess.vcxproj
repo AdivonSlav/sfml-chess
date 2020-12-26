@@ -20,13 +20,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\chess.cpp" />
-    <ClCompile Include="src\functions.cpp" />
+    <ClCompile Include="src\loader.cpp" />
+    <ClCompile Include="src\logic.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\whiteblack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\chess.h" />
-    <ClInclude Include="src\functions.h" />
+    <ClInclude Include="src\loader.h" />
+    <ClInclude Include="src\logic.h" />
+    <ClInclude Include="src\whiteblack.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

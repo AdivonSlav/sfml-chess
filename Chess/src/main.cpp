@@ -1,40 +1,44 @@
-#include <iostream>
+﻿#include <iostream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
 #include "chess.h"
-#include "functions.h"
+#include "loader.h"
+#include "logic.h"
+
+using namespace chess;
+using namespace whiteblack;
+using namespace loader;
+using namespace logic;
+
+const int c_size = 100;
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 800), "Chess");
-	//window.setVerticalSyncEnabled(true);
 
 	Chess board;
-	board.create();
-	board.scale(0.667f, 0.667f);
+	board.create("textures/chess_board4.png");
 
 	White* w_Figures = new White[16];
 	Black* b_Figures = new Black[16];
 	createPieces(w_Figures, b_Figures);
 	loadPieces(board, w_Figures, b_Figures);
-	
 
-	White bishop1;
-	bishop1.create("textures/bishop_white.png");
-	bishop1.scale(0.70f, 0.70f);
-
-	bool isMoved = false;
+	bool w_isMoved = false;
+	bool b_isMoved = false;
 	float dx = 0.0f;
 	float dy = 0.0f;
+	int moved_Piece = 0;
+	sf::Vector2f old_position;
 	
 	// Glavni game loop
 	while (window.isOpen()) 
 	{
 		sf::Event event;
 
-		//Pozicija mi�a u integer vektoru
+		//Pozicija miša u integer vektoru
 		sf::Vector2i position = sf::Mouse::getPosition(window);
 		
 		// Provjerava promjene u stanju igre
@@ -47,26 +51,75 @@ int main()
 				window.close();
 			}
 
+			// Provjerava da li se je pritisnuo lijevi klik na mišu
 			if (event.type == sf::Event::MouseButtonPressed)
 				if (event.key.code == sf::Mouse::Left)
-					if (bishop1.getSprite().getGlobalBounds().contains(position.x, position.y))
+				{
+					// Pomjeri sprite od objekta za onoliko koliko se miš pomjerio
+					for (int i = 0; i < 16; i++)
 					{
-						isMoved = true;
-						dx = position.x - bishop1.getPosition().x;
-						dy = position.y - bishop1.getPosition().y;
+						if (w_Figures[i].getSprite().getGlobalBounds().contains(position.x, position.y))
+						{
+							w_isMoved = true;
+							moved_Piece = i;
+							dx = position.x - w_Figures[i].getPosition().x;
+							dy = position.y - w_Figures[i].getPosition().y;
+							old_position = w_Figures[i].getPosition();
+						}
 					}
+					
+					for (int i = 0; i < 16; i++)
+					{
+						if (b_Figures[i].getSprite().getGlobalBounds().contains(position.x, position.y))
+						{
+							b_isMoved = true;
+							moved_Piece = i;
+							dx = position.x - b_Figures[i].getPosition().x;
+							dy = position.y - b_Figures[i].getPosition().y;
+							old_position = b_Figures[i].getPosition();
+						}
+					}					
+				}
 
+			// Nakon prestanka klika, kalkuliše poziciju objekta unutar ćelije table
 			if (event.type == sf::Event::MouseButtonReleased)
 				if (event.key.code == sf::Mouse::Left)
-					isMoved = false;
+				{
+					if (w_isMoved)
+					{
+						w_isMoved = false;
+
+						sf::Vector2f new_position = calculatePos(c_size, w_Figures[moved_Piece]);
+						w_Figures[moved_Piece].move(new_position.x, new_position.y);
+
+						std::string notated_move = chessNotate(old_position, c_size) + chessNotate(new_position, c_size);
+						std::cout << notated_move << std::endl;
+					}
+
+					else if (b_isMoved)
+					{
+						b_isMoved = false;
+
+						sf::Vector2f new_position = calculatePos(c_size, b_Figures[moved_Piece]);
+						b_Figures[moved_Piece].move(new_position.x, new_position.y);
+
+						std::string notated_move = chessNotate(old_position, c_size) + chessNotate(new_position, c_size);
+						std::cout << notated_move << std::endl;
+					}
+				}
 		}
 
-		if (isMoved)
+		if (w_isMoved)
 		{
-			bishop1.Move(position.x - dx, position.y - dy);
+			w_Figures[moved_Piece].move(position.x - dx, position.y - dy);
 		}
 
-		// Clear screen nakon zadnjeg izvr�enja loop-a
+		else if (b_isMoved)
+		{
+			b_Figures[moved_Piece].move(position.x - dx, position.y - dy);
+		}
+
+		// Clear screen nakon zadnjeg izvršenja loop-a
 		window.clear();
 
 		window.draw(board.getSprite());
