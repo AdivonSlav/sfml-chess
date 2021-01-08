@@ -40,7 +40,7 @@ namespace chess {
 		return m_Board[i][j];
 	}
 
-	sf::Vector2f Chess::getPosition()
+	sf::Vector2f Chess::getPosition() const
 	{
 		return m_Sprite.getPosition();
 	}

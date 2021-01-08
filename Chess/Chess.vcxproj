@@ -23,13 +23,13 @@
     <ClCompile Include="src\loader.cpp" />
     <ClCompile Include="src\logic.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\whiteblack.cpp" />
+    <ClCompile Include="src\pieces.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\chess.h" />
     <ClInclude Include="src\loader.h" />
     <ClInclude Include="src\logic.h" />
-    <ClInclude Include="src\whiteblack.h" />
+    <ClInclude Include="src\pieces.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

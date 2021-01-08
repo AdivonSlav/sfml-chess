@@ -24,10 +24,10 @@
     <ClCompile Include="src\loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\whiteblack.cpp">
+    <ClCompile Include="src\logic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\logic.cpp">
+    <ClCompile Include="src\pieces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,10 +38,10 @@
     <ClInclude Include="src\loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\whiteblack.h">
+    <ClInclude Include="src\logic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\logic.h">
+    <ClInclude Include="src\pieces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

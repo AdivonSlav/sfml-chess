@@ -1,14 +1,13 @@
 #include "loader.h"
-#include "whiteblack.h"
 
 using namespace chess;
-using namespace whiteblack;
+using namespace pieces;
 
 namespace chess { namespace loader {
 
 	const int c_size = 100;
 
-	void createPieces(White w_Figures[], Black b_Figures[])
+	void createPieces(Pieces w_Figures[], Pieces b_Figures[])
 	{
 		for (int i = 0; i < 16; i++)
 		{
@@ -16,27 +15,35 @@ namespace chess { namespace loader {
 			{
 			case 0:
 				w_Figures[i].create("textures/rook_white.png");
+				w_Figures[i].setName('R');
 				break;
 			case 1:
 				w_Figures[i].create("textures/knight_white.png");
+				w_Figures[i].setName('N');
 				break;
 			case 2:
 				w_Figures[i].create("textures/bishop_white.png");
+				w_Figures[i].setName('B');
 				break;
 			case 3:
 				w_Figures[i].create("textures/king_white.png");
+				w_Figures[i].setName('K');
 				break;
 			case 4:
 				w_Figures[i].create("textures/queen_white.png");
+				w_Figures[i].setName('Q');
 				break;
 			case 5:
 				w_Figures[i].create("textures/bishop_white.png");
+				w_Figures[i].setName('B');
 				break;
 			case 6:
 				w_Figures[i].create("textures/knight_white.png");
+				w_Figures[i].setName('K');
 				break;
 			case 7:
 				w_Figures[i].create("textures/rook_white.png");
+				w_Figures[i].setName('R');
 				break;
 			case 8:
 			case 9:
@@ -47,6 +54,7 @@ namespace chess { namespace loader {
 			case 14:
 			case 15:
 				w_Figures[i].create("textures/pawn_white.png");
+				w_Figures[i].setName(' ');
 				break;
 			}
 
@@ -59,27 +67,35 @@ namespace chess { namespace loader {
 			{
 			case 0:
 				b_Figures[i].create("textures/rook_black.png");
+				b_Figures[i].setName('R');
 				break;
 			case 1:
 				b_Figures[i].create("textures/knight_black.png");
+				b_Figures[i].setName('R');
 				break;
 			case 2:
 				b_Figures[i].create("textures/bishop_black.png");
+				b_Figures[i].setName('B');
 				break;
 			case 3:
 				b_Figures[i].create("textures/queen_black.png");
+				b_Figures[i].setName('Q');
 				break;
 			case 4:
 				b_Figures[i].create("textures/king_black.png");
+				b_Figures[i].setName('K');
 				break;
 			case 5:
 				b_Figures[i].create("textures/bishop_black.png");
+				b_Figures[i].setName('B');
 				break;
 			case 6:
 				b_Figures[i].create("textures/knight_black.png");
+				b_Figures[i].setName('K');
 				break;
 			case 7:
 				b_Figures[i].create("textures/rook_black.png");
+				b_Figures[i].setName('R');
 				break;
 			case 8:
 			case 9:
@@ -90,6 +106,7 @@ namespace chess { namespace loader {
 			case 14:
 			case 15:
 				b_Figures[i].create("textures/pawn_black.png");
+				b_Figures[i].setName(' ');
 				break;
 			}
 
@@ -98,7 +115,7 @@ namespace chess { namespace loader {
 
 	}
 
-	void loadPieces(Chess& board, White w_Figures[], Black b_Figures[])
+	void loadPieces(Chess& board, Pieces w_Figures[], Pieces b_Figures[])
 	{
 		int k = 0;
 

@@ -8,10 +8,10 @@
 #include "logic.h"
 
 using namespace chess;
-using namespace whiteblack;
 using namespace loader;
 using namespace logic;
 
+// Velicina celije za kalkulacije
 const int c_size = 100;
 
 int main()
@@ -21,8 +21,8 @@ int main()
 	Chess board;
 	board.create("textures/chess_board4.png");
 
-	White* w_Figures = new White[16];
-	Black* b_Figures = new Black[16];
+	Pieces* w_Figures = new Pieces[16];
+	Pieces* b_Figures = new Pieces[16];
 	createPieces(w_Figures, b_Figures);
 	loadPieces(board, w_Figures, b_Figures);
 
@@ -62,8 +62,10 @@ int main()
 						{
 							w_isMoved = true;
 							moved_Piece = i;
+							
 							dx = position.x - w_Figures[i].getPosition().x;
 							dy = position.y - w_Figures[i].getPosition().y;
+							
 							old_position = w_Figures[i].getPosition();
 						}
 					}
@@ -74,8 +76,10 @@ int main()
 						{
 							b_isMoved = true;
 							moved_Piece = i;
+							
 							dx = position.x - b_Figures[i].getPosition().x;
 							dy = position.y - b_Figures[i].getPosition().y;
+							
 							old_position = b_Figures[i].getPosition();
 						}
 					}					
@@ -92,8 +96,9 @@ int main()
 						sf::Vector2f new_position = calculatePos(c_size, w_Figures[moved_Piece]);
 						w_Figures[moved_Piece].move(new_position.x, new_position.y);
 
-						std::string notated_move = chessNotate(old_position, c_size) + chessNotate(new_position, c_size);
-						std::cout << notated_move << std::endl;
+						checkCapture(b_Figures, new_position);
+
+						std::cout << chessNotate(old_position, c_size) + chessNotate(new_position, c_size) << std::endl;
 					}
 
 					else if (b_isMoved)
@@ -103,8 +108,9 @@ int main()
 						sf::Vector2f new_position = calculatePos(c_size, b_Figures[moved_Piece]);
 						b_Figures[moved_Piece].move(new_position.x, new_position.y);
 
-						std::string notated_move = chessNotate(old_position, c_size) + chessNotate(new_position, c_size);
-						std::cout << notated_move << std::endl;
+						checkCapture(w_Figures, new_position);
+						
+						std::cout << chessNotate(old_position, c_size) + chessNotate(new_position, c_size) << std::endl;
 					}
 				}
 		}

@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Texture.hpp>
 
 namespace chess
 {
@@ -54,7 +53,7 @@ namespace chess
 		/*
 		* Vraća apsolutnu poziciju objekta preko njegovog sprita kao Vector2f
 		 */
-		sf::Vector2f getPosition();
+		sf::Vector2f getPosition() const;
 
 		/*
 		 * Vraća relativnu poziciju objekta u odnosu na ćeliju table
