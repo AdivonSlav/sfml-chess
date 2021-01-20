@@ -32,7 +32,15 @@ int main()
 	float dy = 0.0f;
 	int moved_Piece = 0;
 	sf::Vector2f old_position;
-	
+
+	// Oblik za pokazivanje zadnjeg poteza
+	sf::RectangleShape last_move[2];
+	for (int i = 0; i < 2; i++)
+	{
+		last_move[i].setSize(sf::Vector2f(100.0f, 100.0f));
+		last_move[i].setPosition(-100.0f, -100.0f);
+		last_move[i].setFillColor(sf::Color(186, 184, 108, 128));
+	}
 	// Glavni game loop
 	while (window.isOpen()) 
 	{
@@ -53,7 +61,7 @@ int main()
 
 			// Provjerava da li se je pritisnuo lijevi klik na mišu
 			if (event.type == sf::Event::MouseButtonPressed)
-				if (event.key.code == sf::Mouse::Left)
+				if (event.mouseButton.button == sf::Mouse::Left)
 				{
 					// Pomjeri sprite od objekta za onoliko koliko se miš pomjerio
 					for (int i = 0; i < 16; i++)
@@ -65,7 +73,7 @@ int main()
 							
 							dx = position.x - w_Figures[i].getPosition().x;
 							dy = position.y - w_Figures[i].getPosition().y;
-							
+							 
 							old_position = w_Figures[i].getPosition();
 						}
 					}
@@ -87,14 +95,16 @@ int main()
 
 			// Nakon prestanka klika, kalkuliše poziciju objekta unutar ćelije table
 			if (event.type == sf::Event::MouseButtonReleased)
-				if (event.key.code == sf::Mouse::Left)
+				if (event.mouseButton.button == sf::Mouse::Left)
 				{
 					if (w_isMoved)
 					{
 						w_isMoved = false;
-
+						
 						sf::Vector2f new_position = calculatePos(c_size, w_Figures[moved_Piece]);
 						w_Figures[moved_Piece].move(new_position.x, new_position.y);
+						
+						displayLastMove(c_size, old_position, new_position, last_move);
 
 						checkCapture(b_Figures, new_position);
 
@@ -104,9 +114,12 @@ int main()
 					else if (b_isMoved)
 					{
 						b_isMoved = false;
+						
 
 						sf::Vector2f new_position = calculatePos(c_size, b_Figures[moved_Piece]);
 						b_Figures[moved_Piece].move(new_position.x, new_position.y);
+
+						displayLastMove(c_size, old_position, new_position, last_move);
 
 						checkCapture(w_Figures, new_position);
 						
@@ -129,6 +142,8 @@ int main()
 		window.clear();
 
 		window.draw(board.getSprite());
+
+		for (int i = 0; i < 2; i++) window.draw(last_move[i]);
 
 		for (int i = 0; i < 16; i++)
 		{

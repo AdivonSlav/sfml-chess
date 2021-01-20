@@ -23,4 +23,9 @@ namespace chess { namespace logic {
 	 * Provjera da li je figura uzeta
 	 */
 	void checkCapture(Pieces* figures, sf::Vector2f pos);
+
+	/*
+	 * Graficki prikaze zadnji potez
+	 */
+	void displayLastMove(int cell_size, sf::Vector2f& old_position, sf::Vector2f& new_position, sf::RectangleShape last_move[2]);
 }}

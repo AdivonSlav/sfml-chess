@@ -31,4 +31,11 @@ namespace chess { namespace logic {
 			}
 		}
 	}
+
+	void displayLastMove(int cell_size, sf::Vector2f& old_position, sf::Vector2f& new_position, sf::RectangleShape last_move[2])
+	{
+		last_move[0].setPosition(cell_size * int(old_position.x / cell_size), cell_size * int(old_position.y / cell_size));
+
+		last_move[1].setPosition(cell_size * int(new_position.x / cell_size), cell_size * int(new_position.y / cell_size));
+	}
 }}
